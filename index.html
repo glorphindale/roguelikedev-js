@@ -14,10 +14,18 @@
 
 <canvas></canvas>
 
-<script>
-    canvas = document.querySelector("canvas");
+<script src="js/game.js"></script>
+<script src="js/map.js"></script>
+<script src="js/monster.js"></script>
+<script src="js/spell.js"></script>
+<script src="js/tile.js"></script>
+<script src="js/util.js"></script>
 
-    ctx = canvas.getContext("2d");
+<script>
+    tile_size = 64;
+    num_tiles = 9
+    ui_width = 4;
+
     x = y = 0;
     document.querySelector("html").onkeypress = function(e) {
         if (e.key == "w") y--;
@@ -27,10 +35,11 @@
     };
 
     function draw() {
-        ctx.clearRect(0, 0, 1000, 1000);
-        ctx.fillRect(x*20, y*20, 20, 20);
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.fillRect(x*tile_size, y*tile_size, tile_size, tile_size);
     }
 
     setInterval(draw, 15);
     
+    setupCanvas();
 </script>
