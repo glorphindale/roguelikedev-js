@@ -28,6 +28,10 @@
 
     spritesheet = new Image();
     spritesheet.src = 'spritesheet.png';
+    SPRITE_PLAYER = 0;
+    SPRITE_PLAYER_DEAD = 1;
+    SPRITE_FLOOR = 2;
+    SPRITE_WALL = 3;
 
     x = y = 0;
     document.querySelector("html").onkeypress = function(e) {
@@ -40,4 +44,6 @@
     setInterval(draw, 15);
     
     setupCanvas();
+    generateLevel();
+    placePlayer();
 </script>

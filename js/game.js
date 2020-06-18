@@ -9,7 +9,7 @@ function setupCanvas() {
     ctx.imageSmoothingEnabled = false;
 }
 
-function draw_sprite(sprite, x, y) {
+function drawSprite(sprite, x, y) {
     ctx.drawImage(
         spritesheet,
         sprite*16, 0, 16, 16,
@@ -19,5 +19,16 @@ function draw_sprite(sprite, x, y) {
 
 function draw() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    draw_sprite(0, x, y);
+    for (let i = 0; i < num_tiles; i++) {
+        for (let j = 0; j < num_tiles; j++) {
+            getTile(i, j).draw();
+        }
+    }
+    drawSprite(0, x, y);
+}
+
+function placePlayer() {
+    let starting_tile = getRandomPassableTile();
+    x = starting_tile.x;
+    y = starting_tile.y;
 }
