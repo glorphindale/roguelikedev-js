@@ -24,11 +24,9 @@ function draw() {
             getTile(i, j).draw();
         }
     }
-    drawSprite(0, x, y);
+    player.draw();
 }
 
 function placePlayer() {
-    let starting_tile = getRandomPassableTile();
-    x = starting_tile.x;
-    y = starting_tile.y;
+    return new Player(getRandomPassableTile());
 }

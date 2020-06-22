@@ -24,7 +24,7 @@
 <script>
     tile_size = 64;
     num_tiles = 9
-    ui_width = 4;
+    ui_width = 0; // Should be 4 when ui is added
 
     spritesheet = new Image();
     spritesheet.src = 'spritesheet.png';
@@ -35,15 +35,15 @@
 
     x = y = 0;
     document.querySelector("html").onkeypress = function(e) {
-        if (e.key == "w") y--;
-        if (e.key == "s") y++;
-        if (e.key == "a") x--;
-        if (e.key == "d") x++;
+        if (e.key == "w") player.tryMove(0, -1);
+        if (e.key == "s") player.tryMove(0, 1);
+        if (e.key == "a") player.tryMove(-1, 0);
+        if (e.key == "d") player.tryMove(1, 0);
     };
 
     setInterval(draw, 15);
     
     setupCanvas();
     generateLevel();
-    placePlayer();
+    player = placePlayer();
 </script>

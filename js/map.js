@@ -19,7 +19,6 @@ function generateLevel() {
     tryTo("generate map", function() {
         let open_tiles = generateTiles();
         let connected_tiles = getRandomPassableTile().getConnectedTiles().length
-        console.log("Open " + open_tiles + ", connected " + connected_tiles);
         return open_tiles == connected_tiles;
     });
 }
