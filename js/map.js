@@ -1,18 +1,27 @@
 function generateTiles() {
+    let open_tiles = 0;
     tiles = [];
     for (let i = 0; i < num_tiles; i++) {
         tiles[i] = [];
         for (let j = 0; j < num_tiles; j++) {
-            if (Math.random() < 0.3 && isInBounds(i, j)) {
+            if (Math.random() < 0.3 || !isInBounds(i, j)) {
                 tiles[i][j] = new Wall(i, j);
             } else {
                 tiles[i][j] = new Floor(i, j);
+                open_tiles++;
             }
         }
     }
+    return open_tiles;
 }
+
 function generateLevel() {
-    generateTiles();
+    tryTo("generate map", function() {
+        let open_tiles = generateTiles();
+        let connected_tiles = getRandomPassableTile().getConnectedTiles().length
+        console.log("Open " + open_tiles + ", connected " + connected_tiles);
+        return open_tiles == connected_tiles;
+    });
 }
 
 function isInBounds(x, y) {

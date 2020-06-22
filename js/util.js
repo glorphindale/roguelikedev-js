@@ -12,3 +12,14 @@ function tryTo(description, callback) {
     }
     throw "Timeout when trying to " + description;
 }
+
+function shuffle(arr) {
+    let temp, r;
+    for (let i = 1; i < arr.length; i++) {
+        r = randomRange(0, i);
+        temp = arr[i];
+        arr[i] = arr[r];
+        arr[r] = temp;
+    }
+    return arr;
+}
