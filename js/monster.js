@@ -21,8 +21,19 @@ class Monster {
         }
     }
 
+    drawHP() {
+        for (let i = 0; i < this.hp; i++) {
+            drawSprite(
+                SPRITE_HEALTH,
+                this.tile.x + (i%3)*5/16,
+                this.tile.y + Math.floor(i/3)*(5/16)
+            );
+        }
+    }
+
     draw() {
         drawSprite(this.sprite, this.tile.x, this.tile.y);
+        this.drawHP();
     }
 
     tryMove(dx, dy) {
