@@ -12,7 +12,7 @@ class Monster {
     doStuff() {
         let neighbors = this.tile.getPassableNeighbors();
 
-        neighbors = neighbors.filter(t => !t.monster || t.monster.isPlayer);
+        neighbors = neighbors.filter(t => !t.monster || t.monster.is_player);
 
         if (neighbors) {
             neighbors.sort((a, b) => a.dist(player.tile) - b.dist(player.tile));
@@ -41,11 +41,27 @@ class Monster {
         if (new_tile.passable) {
             if (!new_tile.monster) {
                 this.move(new_tile);
+            } else {
+                if (this.is_player != new_tile.monster.is_player) {
+                    new_tile.monster.hit(1);
+                }
             }
             return true;
         } else {
             return false;
         }
+    }
+
+    hit(dmg) {
+        this.hp -= dmg;
+        if (this.hp <= 0) {
+            this.die();
+        }
+    }
+
+    die() {
+        this.dead = true;
+        this.tile.monster = null;
     }
 
     move(tile) {
@@ -67,6 +83,11 @@ class Player extends Monster {
         if (super.tryMove(dx, dy)) {
             tick();
         }
+    }
+
+    die() {
+        super.die();
+        this.sprite = SPRITE_PLAYER_DEAD;
     }
 }
 
