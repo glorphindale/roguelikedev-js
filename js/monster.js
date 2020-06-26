@@ -6,6 +6,10 @@ class Monster {
     }
 
     update() {
+        if (this.stunned) {
+            this.stunned = false;
+            return;
+        }
         this.doStuff();
     }
 
@@ -43,6 +47,8 @@ class Monster {
                 this.move(new_tile);
             } else {
                 if (this.is_player != new_tile.monster.is_player) {
+                    this.attacked_this_turn = true;
+                    new_tile.monster.stunned = true;
                     new_tile.monster.hit(1);
                 }
             }
@@ -57,6 +63,10 @@ class Monster {
         if (this.hp <= 0) {
             this.die();
         }
+    }
+
+    heal(amount) {
+        this.hp = Math.min(max_hp, this.hp + amount);
     }
 
     die() {
@@ -101,11 +111,30 @@ class Lizard extends Monster {
     constructor(tile) {
         super(tile, SPRITE_LIZARD, 3);
     }
+
+    doStuff() {
+        this.attacked_this_turn = false;
+        super.doStuff();
+
+        if (!this.attacked_this_turn) {
+            super.doStuff();
+        }
+    }
 }
 
 class Ecto extends Monster {
     constructor(tile) {
         super(tile, SPRITE_ECTO, 1);
+    }
+
+    doStuff() {
+        let neighbors = this.tile.getNeighbors().filter(t => !t.passable && isInBounds(t.x, t.y));
+        if (neighbors.length) {
+            neighbors[0].replace(Floor);
+            this.heal(0.5);
+        } else {
+            super.doStuff()
+        }
     }
 }
 
@@ -113,10 +142,28 @@ class Snake extends Monster {
     constructor(tile) {
         super(tile, SPRITE_SNAKE, 3);
     }
+
+    update() {
+        let started_stunned = this.stunned;
+        super.update();
+        if (!started_stunned) {
+            this.stunned = true;
+        }
+    }
 }
 
 class Jester extends Monster {
     constructor(tile) {
         super(tile, SPRITE_JESTER, 2);
+    }
+
+    doStuff() {
+        let neighbors = this.tile.getNeighborsDiagonal();
+        neighbors = neighbors.filter(t => t.passable);
+        if (neighbors) {
+            neighbors.sort((a, b) => a.dist(player.tile) - b.dist(player.tile));
+            let new_tile = neighbors[0];
+            this.tryMove(new_tile.x - this.tile.x, new_tile.y - this.tile.y);
+        }
     }
 }

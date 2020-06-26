@@ -10,6 +10,11 @@ class Tile {
         drawSprite(this.sprite, this.x, this.y);
     }
 
+    replace(new_tile_type) {
+        tiles[this.x][this.y] = new new_tile_type(this.x, this.y);
+        return tiles[this.x][this.y];
+    }
+
     dist(other) {
         // calculate manhattan distance
         return Math.abs(this.x - other.x) + Math.abs(this.y - other.y);
@@ -25,6 +30,15 @@ class Tile {
             this.getNeighbor(1, 0),
             this.getNeighbor(0, -1),
             this.getNeighbor(0, 1)
+        ]);
+    }
+
+    getNeighborsDiagonal() {
+        return shuffle([
+            this.getNeighbor(-1, -1),
+            this.getNeighbor(1, -1),
+            this.getNeighbor(-1, 1),
+            this.getNeighbor(1, 1)
         ]);
     }
 
