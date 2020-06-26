@@ -5,6 +5,22 @@ class Monster {
         this.hp = hp;
     }
 
+    update() {
+        this.doStuff();
+    }
+
+    doStuff() {
+        let neighbors = this.tile.getPassableNeighbors();
+
+        neighbors = neighbors.filter(t => !t.monster || t.monster.isPlayer);
+
+        if (neighbors) {
+            neighbors.sort((a, b) => a.dist(player.tile) - b.dist(player.tile));
+            let new_tile = neighbors[0];
+            this.tryMove(new_tile.x - this.tile.x, new_tile.y - this.tile.y);
+        }
+    }
+
     draw() {
         drawSprite(this.sprite, this.tile.x, this.tile.y);
     }
@@ -34,5 +50,41 @@ class Player extends Monster {
     constructor(tile) {
         super(tile, SPRITE_PLAYER, 3);
         this.is_player = true;
+    }
+
+    tryMove(dx, dy) {
+        if (super.tryMove(dx, dy)) {
+            tick();
+        }
+    }
+}
+
+class Dodo extends Monster {
+    constructor(tile) {
+        super(tile, SPRITE_DODO, 2);
+    }
+}
+
+class Lizard extends Monster {
+    constructor(tile) {
+        super(tile, SPRITE_LIZARD, 3);
+    }
+}
+
+class Ecto extends Monster {
+    constructor(tile) {
+        super(tile, SPRITE_ECTO, 1);
+    }
+}
+
+class Snake extends Monster {
+    constructor(tile) {
+        super(tile, SPRITE_SNAKE, 3);
+    }
+}
+
+class Jester extends Monster {
+    constructor(tile) {
+        super(tile, SPRITE_JESTER, 2);
     }
 }

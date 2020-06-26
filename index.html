@@ -23,8 +23,9 @@
 
 <script>
     tile_size = 64;
-    num_tiles = 9
+    num_tiles = 11;
     ui_width = 0; // Should be 4 when ui is added
+    wall_density = 0.2;
 
     spritesheet = new Image();
     spritesheet.src = 'spritesheet.png';
@@ -32,6 +33,12 @@
     SPRITE_PLAYER_DEAD = 1;
     SPRITE_FLOOR = 2;
     SPRITE_WALL = 3;
+    SPRITE_DODO = 4;
+    SPRITE_LIZARD = 5;
+    SPRITE_ECTO = 6;
+    SPRITE_SNAKE = 7;
+    SPRITE_JESTER = 8;
+    SPRITE_HEALTH = 9;
 
     x = y = 0;
     document.querySelector("html").onkeypress = function(e) {
@@ -42,8 +49,10 @@
     };
 
     setInterval(draw, 15);
-    
     setupCanvas();
+    // Actual game
+    level = 1;
     generateLevel();
     player = placePlayer();
+    generateMonsters();
 </script>

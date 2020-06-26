@@ -4,7 +4,7 @@ function generateTiles() {
     for (let i = 0; i < num_tiles; i++) {
         tiles[i] = [];
         for (let j = 0; j < num_tiles; j++) {
-            if (Math.random() < 0.3 || !isInBounds(i, j)) {
+            if (Math.random() < wall_density || !isInBounds(i, j)) {
                 tiles[i][j] = new Wall(i, j);
             } else {
                 tiles[i][j] = new Floor(i, j);
@@ -44,4 +44,18 @@ function getRandomPassableTile() {
         return tile.passable && !tile.monster;
     });
     return tile;
+}
+
+function spawnMonster() {
+    let monster_type = shuffle([Dodo, Lizard, Ecto, Snake, Jester])[0];
+    let monster = new monster_type(getRandomPassableTile());
+    monsters.push(monster);
+}
+
+function generateMonsters() {
+    monsters = [];
+    let num_monsters = level + 1;
+    for (let i = 0; i < num_monsters; i++) {
+        spawnMonster();
+    }
 }

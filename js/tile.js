@@ -10,6 +10,11 @@ class Tile {
         drawSprite(this.sprite, this.x, this.y);
     }
 
+    dist(other) {
+        // calculate manhattan distance
+        return Math.abs(this.x - other.x) + Math.abs(this.y - other.y);
+    }
+
     getNeighbor(dx, dy) {
         return getTile(this.x + dx, this.y + dy);
     }
