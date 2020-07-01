@@ -17,6 +17,19 @@ function drawSprite(sprite, x, y) {
     );
 }
 
+function drawText(text, size, centered, textY, color) {
+    ctx.fillStyle = color;
+    ctx.font = size + "px monospace";
+    let textX;
+    if (centered) {
+        textX = (canvas.width - ctx.measureText(text).width)/2;
+    } else {
+        textX = canvas.width - ui_width*tile_size + 25;
+    }
+
+    ctx.fillText(text, textX, textY);
+}
+
 function draw() {
     if (game_state == "running" || game_state == "dead") {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -25,10 +38,16 @@ function draw() {
                 getTile(i, j).draw();
             }
         }
-        player.draw();
         for (let i = 0; i < monsters.length; i++) {
             monsters[i].draw();
         }
+        player.draw();
+
+        drawText("Level: " + level, 30, false, 40, "white");
+    }
+
+    if (game_state == "dead") {
+        drawText("YOU DIED", 30, false, 80, "RED");
     }
 }
 
@@ -61,6 +80,11 @@ function showTitle() {
     ctx.fillStyle = 'rgba(0, 0, 0, 0.75)';
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 
+    drawText("SUPER", 40, true, canvas.height/2 - 110, "red");
+    drawText("BROUGH BROS.", 70, true, canvas.height/2 - 50, "white");
+
+    drawText("Press any key to start", 30, true, canvas.height/2 - 10, "white");
+
     game_state = "title";
 }
 
@@ -81,4 +105,6 @@ function startLevel(player_hp) {
 
     player = placePlayer();
     player.hp = player_hp;
+
+    getRandomPassableTile().replace(Exit);
 }

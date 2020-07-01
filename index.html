@@ -30,7 +30,7 @@
     game_state = "loading";
     // ui
     tile_size = 64;
-    ui_width = 0; // Should be 4 when ui is added
+    ui_width = 4; // Should be 4 when ui is added
     wall_density = 0.2;
 
     SPRITE_PLAYER = 0;
@@ -43,6 +43,8 @@
     SPRITE_SNAKE = 7;
     SPRITE_JESTER = 8;
     SPRITE_HEALTH = 9;
+    SPRITE_PORTAL = 10;
+    SPRITE_EXIT = 11;
 
     spritesheet = new Image();
     spritesheet.src = 'spritesheet.png';
@@ -64,5 +66,4 @@
     // Complete initialization
     setInterval(draw, 15);
     setupCanvas();
-    startGame();
 </script>
