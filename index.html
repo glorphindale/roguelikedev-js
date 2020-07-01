@@ -22,14 +22,17 @@
 <script src="js/util.js"></script>
 
 <script>
-    tile_size = 64;
+    // gameplay
     num_tiles = 11;
+    max_hp = 6;
+    num_levels = 6;
+    starting_hp = 3;
+    game_state = "loading";
+    // ui
+    tile_size = 64;
     ui_width = 0; // Should be 4 when ui is added
     wall_density = 0.2;
-    max_hp = 6;
 
-    spritesheet = new Image();
-    spritesheet.src = 'spritesheet.png';
     SPRITE_PLAYER = 0;
     SPRITE_PLAYER_DEAD = 1;
     SPRITE_FLOOR = 2;
@@ -41,19 +44,25 @@
     SPRITE_JESTER = 8;
     SPRITE_HEALTH = 9;
 
-    x = y = 0;
+    spritesheet = new Image();
+    spritesheet.src = 'spritesheet.png';
+    spritesheet.onload = showTitle;
+    
     document.querySelector("html").onkeypress = function(e) {
-        if (e.key == "w") player.tryMove(0, -1);
-        if (e.key == "s") player.tryMove(0, 1);
-        if (e.key == "a") player.tryMove(-1, 0);
-        if (e.key == "d") player.tryMove(1, 0);
+        if (game_state == "title") {
+            startGame();
+        } else if (game_state == "dead") {
+            showTitle();
+        } else if (game_state == "running") {
+            if (e.key == "w") player.tryMove(0, -1);
+            if (e.key == "s") player.tryMove(0, 1);
+            if (e.key == "a") player.tryMove(-1, 0);
+            if (e.key == "d") player.tryMove(1, 0);
+        }
     };
 
+    // Complete initialization
     setInterval(draw, 15);
     setupCanvas();
-    // Actual game
-    level = 1;
-    generateLevel();
-    player = placePlayer();
-    generateMonsters();
+    startGame();
 </script>

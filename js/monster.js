@@ -85,7 +85,7 @@ class Monster {
 
 class Player extends Monster {
     constructor(tile) {
-        super(tile, SPRITE_PLAYER, 3);
+        super(tile, SPRITE_PLAYER, starting_hp);
         this.is_player = true;
     }
 
