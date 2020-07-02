@@ -44,10 +44,11 @@ function draw() {
         player.draw();
 
         drawText("Level: " + level, 30, false, 40, "white");
+        drawText("Score: " + score, 30, false, 70, "white");
     }
 
     if (game_state == "dead") {
-        drawText("YOU DIED", 30, false, 80, "RED");
+        drawText("YOU DIED", 30, false, 180, "RED");
     }
 }
 
@@ -90,6 +91,7 @@ function showTitle() {
 
 function startGame() {
     level = 1;
+    score = 0;
     x = y = 0;
 
     startLevel(starting_hp);
@@ -101,7 +103,6 @@ function startLevel(player_hp) {
     spawn_counter = spawn_rate;
 
     generateLevel();
-    generateMonsters();
 
     player = placePlayer();
     player.hp = player_hp;

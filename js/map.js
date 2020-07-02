@@ -21,6 +21,12 @@ function generateLevel() {
         let connected_tiles = getRandomPassableTile().getConnectedTiles().length
         return open_tiles == connected_tiles;
     });
+
+    generateMonsters();
+
+    for (let i = 0; i < 3; i++) {
+        getRandomPassableTile().treasure = true;
+    }
 }
 
 function isInBounds(x, y) {
