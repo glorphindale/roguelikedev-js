@@ -23,3 +23,15 @@ function shuffle(arr) {
     }
     return arr;
 }
+
+function rightPad(text_array) {
+    let final_text = "";
+    text_array.forEach(text => {
+        text += "";
+        for (let i = text.length; i < 10; i++) {
+            text += " ";
+        }
+        final_text += text;
+    });
+    return final_text;
+}

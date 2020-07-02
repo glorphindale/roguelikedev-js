@@ -91,6 +91,7 @@ class Exit extends Tile {
     stepOn(monster) {
         if (monster.is_player) {
             if (level == num_levels) {
+                addScore(score, false);
                 showTitle();
             } else {
                 level++;
