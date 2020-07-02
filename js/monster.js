@@ -3,6 +3,8 @@ class Monster {
         this.move(tile);
         this.sprite = sprite;
         this.hp = hp;
+        this.offset_x = 0;
+        this.offset_y = 0;
 
         this.teleport_counter = 2;
     }
@@ -35,19 +37,29 @@ class Monster {
         for (let i = 0; i < this.hp; i++) {
             drawSprite(
                 SPRITE_HEALTH,
-                this.tile.x + (i%3)*5/16,
-                this.tile.y + Math.floor(i/3)*(5/16)
+                this.getDisplayX() + (i%3)*5/16,
+                this.getDisplayY() + Math.floor(i/3)*(5/16)
             );
         }
     }
 
+    getDisplayX() {
+        return this.tile.x + this.offset_x;
+    }
+    getDisplayY() {
+        return this.tile.y + this.offset_y;
+    }
+
     draw() {
         if (this.teleport_counter) {
-            drawSprite(SPRITE_PORTAL, this.tile.x, this.tile.y);
+            drawSprite(SPRITE_PORTAL, this.getDisplayX(), this.getDisplayY());
         } else {
-            drawSprite(this.sprite, this.tile.x, this.tile.y);
+            drawSprite(this.sprite, this.getDisplayX(), this.getDisplayY());
             this.drawHP();
         }
+
+        this.offset_x -= Math.sign(this.offset_x)*(1/8);
+        this.offset_y -= Math.sign(this.offset_y)*(1/8);
     }
 
     tryMove(dx, dy) {
@@ -87,6 +99,9 @@ class Monster {
     move(tile) {
         if (this.tile) {
             this.tile.monster = null;
+
+            this.offset_x = this.tile.x - tile.x;
+            this.offset_y = this.tile.y - tile.y;
         }
         this.tile = tile;
         tile.monster = this;
