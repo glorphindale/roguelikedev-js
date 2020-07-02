@@ -43,8 +43,8 @@ function draw() {
         }
         player.draw();
 
-        drawText("Level: " + level, 30, false, 0, "white");
-        drawText("Score: " + score, 30, false, 30, "white");
+        drawText("Level: " + level, 30, false, 30, "white");
+        drawText("Score: " + score, 30, false, 60, "white");
     }
 
     if (game_state == "dead") {

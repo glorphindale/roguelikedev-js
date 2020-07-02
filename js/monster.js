@@ -26,7 +26,7 @@ class Monster {
 
         neighbors = neighbors.filter(t => !t.monster || t.monster.is_player);
 
-        if (neighbors) {
+        if (neighbors && neighbors.length > 0) {
             neighbors.sort((a, b) => a.dist(player.tile) - b.dist(player.tile));
             let new_tile = neighbors[0];
             this.tryMove(new_tile.x - this.tile.x, new_tile.y - this.tile.y);
