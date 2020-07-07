@@ -73,6 +73,8 @@ class Monster {
                     new_tile.monster.stunned = true;
                     new_tile.monster.hit(1);
 
+                    shake_amount = 5;
+
                     this.offset_x = (new_tile.x - this.tile.x) / 2;
                     this.offset_y = (new_tile.y - this.tile.y) / 2;
                 }

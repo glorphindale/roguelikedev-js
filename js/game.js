@@ -13,7 +13,10 @@ function drawSprite(sprite, x, y) {
     ctx.drawImage(
         spritesheet,
         sprite*16, 0, 16, 16,
-        x*tile_size, y*tile_size, tile_size, tile_size
+        x*tile_size + shake_x,
+        y*tile_size + shake_y,
+        tile_size,
+        tile_size
     );
 }
 
@@ -33,6 +36,9 @@ function drawText(text, size, centered, textY, color) {
 function draw() {
     if (game_state == "running" || game_state == "dead") {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        screenshake();
+
         for (let i = 0; i < num_tiles; i++) {
             for (let j = 0; j < num_tiles; j++) {
                 getTile(i, j).draw();
@@ -50,6 +56,16 @@ function draw() {
     if (game_state == "dead") {
         drawText("YOU DIED", 30, false, 180, "RED");
     }
+}
+
+function screenshake() {
+    if (shake_amount) {
+        shake_amount--;
+    }
+
+    let shake_angle = Math.random() * Math.PI * 2;
+    shake_x = Math.round(Math.cos(shake_angle) * shake_amount * 0.3);
+    shake_y = Math.round(Math.sin(shake_angle) * shake_amount * 0.3);
 }
 
 function drawScores() {
