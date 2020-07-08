@@ -12,6 +12,21 @@ class Tile {
         if (this.treasure) {
             drawSprite(SPRITE_GEM, this.x, this.y);
         }
+        // drawEffect used to live here, but monsters obstruct sprites
+    }
+
+    drawEffect() {
+        if (this.effect_counter) {
+            this.effect_counter--;
+            ctx.globalAlpha = this.effect_counter / 30;
+            drawSprite(this.effect_sprite, this.x, this.y);
+            ctx.globalAlpha = 1;
+        }
+    }
+
+    setEffect(sprite) {
+        this.effect_sprite = sprite;
+        this.effect_counter = 30;
     }
 
     replace(new_tile_type) {
@@ -71,6 +86,10 @@ class Floor extends Tile {
     stepOn(monster) {
         if (monster.is_player && this.treasure) {
             score++;
+            if (score % 3 == 0 && num_spells < 9) {
+                num_spells++;
+                player.addSpell();
+            }
             playSound("treasure");
             this.treasure = false;
             spawnMonster();

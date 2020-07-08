@@ -41,16 +41,29 @@ function draw() {
 
         for (let i = 0; i < num_tiles; i++) {
             for (let j = 0; j < num_tiles; j++) {
-                getTile(i, j).draw();
+                let tile = getTile(i, j);
+                tile.draw();
             }
         }
         for (let i = 0; i < monsters.length; i++) {
             monsters[i].draw();
         }
         player.draw();
+        // We need to make a second pass because we need to draw effects over the monsters
+        for (let i = 0; i < num_tiles; i++) {
+            for (let j = 0; j < num_tiles; j++) {
+                let tile = getTile(i, j);
+                tile.drawEffect();
+            }
+        }
 
         drawText("Level: " + level, 30, false, 30, "white");
         drawText("Score: " + score, 30, false, 60, "white");
+
+        for (let i = 0; i < player.spells.length; i++) {
+            let spell_text = (i+1) + ") " + (player.spells[i] || "");
+            drawText(spell_text, 20, false, 90 + i * 20, "aqua");
+        }
     }
 
     if (game_state == "dead") {
@@ -145,12 +158,13 @@ function startGame() {
     level = 1;
     score = 0;
     x = y = 0;
+    num_spells = 9;
 
-    startLevel(starting_hp);
+    startLevel(starting_hp, false);
     game_state = "running";
 }
 
-function startLevel(player_hp) {
+function startLevel(player_hp, player_spells) {
     spawn_rate = 15;
     spawn_counter = spawn_rate;
 
@@ -158,7 +172,10 @@ function startLevel(player_hp) {
 
     player = placePlayer();
     player.hp = player_hp;
-
+    if (player_spells) {
+        player.spells = player_spells;
+    }
+        
     getRandomPassableTile().replace(Exit);
 }
 

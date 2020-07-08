@@ -5,6 +5,7 @@ class Monster {
         this.hp = hp;
         this.offset_x = 0;
         this.offset_y = 0;
+        this.last_move = [-1, 0];
 
         this.teleport_counter = 2;
     }
@@ -65,6 +66,7 @@ class Monster {
     tryMove(dx, dy) {
         let new_tile = this.tile.getNeighbor(dx, dy);
         if (new_tile.passable) {
+            this.last_move = [dx, dy];
             if (!new_tile.monster) {
                 this.move(new_tile);
             } else {
@@ -126,6 +128,8 @@ class Player extends Monster {
         super(tile, SPRITE_PLAYER, starting_hp);
         this.is_player = true;
         this.teleport_counter = 0;
+
+        this.spells = shuffle(Object.keys(spells)).splice(0, num_spells);
     }
 
     tryMove(dx, dy) {
@@ -137,6 +141,21 @@ class Player extends Monster {
     die() {
         super.die();
         this.sprite = SPRITE_PLAYER_DEAD;
+    }
+
+    addSpell() {
+        let new_spell = shuffle(Object.keys(spells))[0];
+        this.spells.push(new_spell);
+    }
+
+    castSpell(index) {
+        let spell_name = this.spells[index];
+        if (spell_name) {
+            delete this.spells[index];
+            spells[spell_name]();
+            playSound("spell");
+            tick();
+        }
     }
 }
 

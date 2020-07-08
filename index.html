@@ -49,6 +49,10 @@
     SPRITE_PORTAL = 10;
     SPRITE_EXIT = 11;
     SPRITE_GEM = 12;
+    SPRITE_AURA = 13;
+    SPRITE_FIREBALL = 14;
+    SPRITE_BOLT_H = 15;
+    SPRITE_BOLT_V = 16;
 
     spritesheet = new Image();
     spritesheet.src = 'spritesheet.png';
@@ -64,6 +68,7 @@
             if (e.key == "s") player.tryMove(0, 1);
             if (e.key == "a") player.tryMove(-1, 0);
             if (e.key == "d") player.tryMove(1, 0);
+            if (e.key >= 1 && e.key <= 9) player.castSpell(e.key-1);
         }
     };
 
