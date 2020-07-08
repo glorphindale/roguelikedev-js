@@ -71,6 +71,7 @@ class Floor extends Tile {
     stepOn(monster) {
         if (monster.is_player && this.treasure) {
             score++;
+            playSound("treasure");
             this.treasure = false;
             spawnMonster();
         }
@@ -90,6 +91,7 @@ class Exit extends Tile {
 
     stepOn(monster) {
         if (monster.is_player) {
+            playSound("new_level");
             if (level == num_levels) {
                 addScore(score, false);
                 showTitle();

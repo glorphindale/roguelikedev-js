@@ -90,6 +90,12 @@ class Monster {
         if (this.hp <= 0) {
             this.die();
         }
+
+        if (this.is_player) {
+            playSound("hit1");
+        } else {
+            playSound("hit2");
+        }
     }
 
     heal(amount) {

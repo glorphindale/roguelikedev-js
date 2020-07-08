@@ -188,3 +188,18 @@ function addScore(new_score, won) {
 
     localStorage["scores"] = JSON.stringify(scores);
 }
+
+function initSounds() {
+    sounds = {
+        hit1: new Audio("sounds/player_hit.wav"),
+        hit2: new Audio("sounds/monster_hit.wav"),
+        treasure: new Audio("sounds/treasure.wav"),
+        new_level: new Audio("sounds/new_level.wav"),
+        spell: new Audio("sounds/spell.wav")
+    };
+}
+
+function playSound(sound_name) {
+    sounds[sound_name].current_time = 0;
+    sounds[sound_name].play();
+}
