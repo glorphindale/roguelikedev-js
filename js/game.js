@@ -67,7 +67,7 @@ function draw() {
     }
 
     if (game_state == "dead") {
-        drawText("YOU DIED", 30, false, 180, "RED");
+        drawText("YOU DIED", 30, false, 380, "RED");
     }
 }
 
@@ -148,7 +148,7 @@ function showTitle() {
     drawText("SUPER", 40, true, canvas.height/2 - 220, "red");
     drawText("BROUGH BROS.", 70, true, canvas.height/2 - 150, "white");
 
-    drawText("Press any key to start", 30, true, canvas.height/2 - 110, "white");
+    drawText("Press a/w/s/d to start", 30, true, canvas.height/2 - 110, "white");
 
     drawScores();
 
