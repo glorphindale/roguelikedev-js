@@ -159,7 +159,7 @@ function startGame() {
     level = 1;
     score = 0;
     x = y = 0;
-    num_spells = 9;
+    num_spells = 2;
 
     startLevel(starting_hp, false);
     game_state = "running";
@@ -171,6 +171,7 @@ function startLevel(player_hp, player_spells) {
 
     generateLevel();
 
+    num_spells++;
     player = placePlayer();
     player.hp = player_hp;
     if (player_spells) {

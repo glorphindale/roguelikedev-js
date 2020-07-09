@@ -147,6 +147,14 @@ class Player extends Monster {
         this.spells = shuffle(Object.keys(spells)).splice(0, num_spells);
     }
 
+    draw() {
+        super.draw();
+
+        if (this.shield) {
+            drawSprite(SPRITE_SHIELD, this.getDisplayX(), this.getDisplayY());
+        }
+    }
+
     tryMove(dx, dy) {
         if (super.tryMove(dx, dy)) {
             tick();
