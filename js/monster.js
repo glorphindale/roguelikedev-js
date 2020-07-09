@@ -8,6 +8,12 @@ class Monster {
         this.last_move = [-1, 0];
 
         this.teleport_counter = 2;
+        this.bonus_attack = 0;
+    }
+
+    replace(new_monster_type) {
+        this.tile.monster = new new_monster_type(this.tile);
+        return this.tile.monster;
     }
 
     update() {
@@ -29,7 +35,12 @@ class Monster {
 
         if (neighbors && neighbors.length > 0) {
             neighbors.sort((a, b) => a.dist(player.tile) - b.dist(player.tile));
-            let new_tile = neighbors[0];
+            let direction = 0;
+            if (this.fear_counter) {
+                direction = neighbors.length-1;
+                this.fear_counter--;
+            }
+            let new_tile = neighbors[direction];
             this.tryMove(new_tile.x - this.tile.x, new_tile.y - this.tile.y);
         }
     }
@@ -73,7 +84,8 @@ class Monster {
                 if (this.is_player != new_tile.monster.is_player) {
                     this.attacked_this_turn = true;
                     new_tile.monster.stunned = true;
-                    new_tile.monster.hit(1);
+                    new_tile.monster.hit(1 + this.bonus_attack);
+                    this.bonus_attack = 0;
 
                     shake_amount = 5;
 
@@ -88,6 +100,9 @@ class Monster {
     }
 
     hit(dmg) {
+        if (this.is_player && this.shield) {
+            return;
+        }
         this.hp -= dmg;
         if (this.hp <= 0) {
             this.die();
@@ -155,6 +170,12 @@ class Player extends Monster {
             spells[spell_name]();
             playSound("spell");
             tick();
+        }
+    }
+
+    update() {
+        if (this.shield > 0) {
+            this.shield--;
         }
     }
 }

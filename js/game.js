@@ -122,6 +122,7 @@ function tick() {
             monsters.splice(k, 1);
         }
     }
+    player.update();
     if (player.dead) {
         addScore(score, false);
         game_state = "dead";
