@@ -171,7 +171,9 @@ function startLevel(player_hp, player_spells) {
 
     generateLevel();
 
-    num_spells++;
+    if (num_spells < 9) {
+        num_spells++;
+    }
     player = placePlayer();
     player.hp = player_hp;
     if (player_spells) {
