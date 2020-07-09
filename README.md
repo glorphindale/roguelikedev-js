@@ -4,6 +4,8 @@ This one is in JavaScript, following along [Broughlike tutorial](https://nluqo.g
 
 ![Current look](Screenshot.png?raw=true "Current look")
 
+Can be played [here](https://glorphindale.github.io/roguelikedev-js/)
+
 ### Usage
 
 To run clone the repo and open index.html.
