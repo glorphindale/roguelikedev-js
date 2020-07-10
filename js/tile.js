@@ -113,6 +113,7 @@ class Exit extends Tile {
             playSound("new_level");
             if (level == num_levels) {
                 addScore(score, true);
+                n_loop += 1;
                 showTitle();
             } else {
                 level++;

@@ -88,7 +88,7 @@ function drawScores() {
     }
 
     drawText(
-        rightPad(["RUN", "SCORE", "TOTAL"]),
+        rightPad(["RUN", "SCORE", "TOTAL SCORE"]),
         18,
         true,
         canvas.height/2 - 30,
@@ -125,6 +125,7 @@ function tick() {
     player.update();
     if (player.dead) {
         addScore(score, false);
+        n_loop = 0;
         game_state = "dead";
     }
 
@@ -132,7 +133,7 @@ function tick() {
     if (spawn_counter <= 0) {
         spawnMonster();
         spawn_counter = spawn_rate;
-        spawn_rate--;
+        spawn_rate = Math.max(0, spawn_rate-n_loop);
     }
 
 }
@@ -150,6 +151,10 @@ function showTitle() {
 
     drawText("Press a/w/s/d to start", 30, true, canvas.height/2 - 110, "white");
 
+    if (n_loop > 0) {
+        drawText("You've conquered the forest of Brough, and it grows darker.", 20, true, canvas.height/2 - 80, "red");
+        drawText("Are you strong enough to come back?", 20, true, canvas.height/2 - 60, "red");
+    }
     drawScores();
 
     game_state = "title";
@@ -166,7 +171,7 @@ function startGame() {
 }
 
 function startLevel(player_hp, player_spells) {
-    spawn_rate = 15;
+    spawn_rate = Math.max(0, 25 - n_loop * 7);
     spawn_counter = spawn_rate;
 
     generateLevel();
