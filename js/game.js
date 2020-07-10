@@ -191,7 +191,7 @@ function getScores() {
     }
 }
 
-function addScore(new_score, won) {
+function addScore(score, won) {
     let scores = getScores();
     let score_obj = {score: score, run: 1, total_score: score, active: won};
     let last_score = scores.pop();

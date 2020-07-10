@@ -112,7 +112,7 @@ class Exit extends Tile {
         if (monster.is_player) {
             playSound("new_level");
             if (level == num_levels) {
-                addScore(score, false);
+                addScore(score, true);
                 showTitle();
             } else {
                 level++;
