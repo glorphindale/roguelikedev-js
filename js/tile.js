@@ -92,7 +92,7 @@ class Floor extends Tile {
             }
             playSound("treasure");
             this.treasure = false;
-            spawnMonster();
+            spawnMonster(level);
         }
     }
 }

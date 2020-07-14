@@ -254,3 +254,17 @@ class Jester extends Monster {
         }
     }
 }
+
+class Jelly extends Monster {
+    constructor(tile) {
+        super(tile, SPRITE_JELLY, 2);
+    }
+
+    doStuff() {
+        let neighbors = this.tile.getPassableNeighbors();
+        if (neighbors && neighbors.length > 0) {
+            let new_tile = shuffle(neighbors)[0];
+            this.tryMove(new_tile.x - this.tile.x, new_tile.y - this.tile.y);
+        }
+    }
+}

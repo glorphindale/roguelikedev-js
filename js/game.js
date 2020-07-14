@@ -131,7 +131,7 @@ function tick() {
 
     spawn_counter--;
     if (spawn_counter <= 0) {
-        spawnMonster();
+        spawnMonster(level);
         spawn_counter = spawn_rate;
         spawn_rate = Math.max(0, spawn_rate-n_loop);
     }

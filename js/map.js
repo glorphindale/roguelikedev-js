@@ -52,8 +52,19 @@ function getRandomPassableTile() {
     return tile;
 }
 
-function spawnMonster() {
-    let monster_type = shuffle([Dodo, Lizard, Ecto, Snake, Jester])[0];
+function spawnMonster(current_level) {
+    let monster_types = [Dodo, Jelly, Snake, Ecto, Lizard, Jester];
+    let cutoff = monster_types.length;
+    current_level += n_loop;
+    if (current_level == 1) {
+        cutoff = 2;
+    } else if (current_level == 2) {
+        cutoff = 3;
+    } else if (current_level == 3) {
+        cutoff = 4;
+    }
+    monster_types = monster_types.slice(0, cutoff);
+    let monster_type = shuffle(monster_types)[0];
     let monster = new monster_type(getRandomPassableTile());
     monsters.push(monster);
 }
@@ -62,6 +73,6 @@ function generateMonsters() {
     monsters = [];
     let num_monsters = level + 1;
     for (let i = 0; i < num_monsters; i++) {
-        spawnMonster();
+        spawnMonster(level);
     }
 }
