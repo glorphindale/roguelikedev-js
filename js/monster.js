@@ -268,3 +268,21 @@ class Jelly extends Monster {
         }
     }
 }
+
+class Mimic extends Monster {
+    constructor(tile) {
+        super(tile, SPRITE_EXIT, 2);
+    }
+
+    doStuff() {
+        let neighbors = this.tile.getPassableNeighbors();
+        neighbors = neighbors.filter(t => t.monster && t.monster.is_player);
+        if (neighbors && neighbors.length > 0) {
+            let new_tile = neighbors[0];
+            this.tryMove(new_tile.x - this.tile.x, new_tile.y - this.tile.y);
+        }
+    }
+
+    drawHP() {
+    }
+}
