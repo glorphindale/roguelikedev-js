@@ -52,6 +52,12 @@ function getRandomPassableTile() {
     return tile;
 }
 
+function putMonster(monster_type, tile) {
+    let monster = new monster_type(tile);
+    monsters.push(monster);
+    return monster;
+}
+
 function spawnMonster(current_level) {
     let monster_types = [Dodo, Jelly, Snake, Ecto, Mimic, Jester, Lizard];
     // Gradually increase amount of monsters
@@ -63,8 +69,7 @@ function spawnMonster(current_level) {
 
     monster_types = monster_types.slice(0, cutoff);
     let monster_type = shuffle(monster_types)[0];
-    let monster = new monster_type(getRandomPassableTile());
-    monsters.push(monster);
+    putMonster(monster_type, getRandomPassableTile());
 }
 
 function generateMonsters() {

@@ -2,7 +2,20 @@ spells = {
     WOOP: function() {
         player.move(getRandomPassableTile());
     },
-    QUAKE: function() {
+    SWAP: function() {
+        if (monsters.length > 0) {
+            let target_monster = shuffle(monsters)[0];
+            let new_tile = target_monster.tile;
+            let player_tile = player.tile;
+            let monster_class = target_monster.constructor;
+
+            target_monster.die();
+            player.move(new_tile);
+            let new_monster = putMonster(monster_class, player_tile);
+            new_monster.teleport_counter = 0;
+        }
+    },
+    TREANTS: function() {
         for (let i = 0; i < num_tiles; i++) {
             for (let j = 0; j < num_tiles; j++) {
                 let tile = getTile(i, j);
@@ -90,7 +103,7 @@ spells = {
         }
     },
     FURODAH: function() {
-        player.shield = 4;
+        player.shield = 5;
         for (let i = 0; i < monsters.length; i++) {
             monsters[i].stunned = true;
         }
@@ -122,7 +135,7 @@ spells = {
     },
     TRANQUILITY: function() {
         for (let i = 0; i < monsters.length; i++) {
-            monsters[i].fear_counter = 3;
+            monsters[i].fear_counter = 5;
         }
     }
 };
