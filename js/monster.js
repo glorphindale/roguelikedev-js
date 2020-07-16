@@ -122,6 +122,7 @@ class Monster {
     die() {
         this.dead = true;
         this.tile.monster = null;
+        this.hp = 0;
     }
 
     move(tile) {
@@ -284,5 +285,27 @@ class Mimic extends Monster {
     }
 
     drawHP() {
+    }
+}
+
+class Vortex extends Monster {
+    constructor(tile) {
+        super(tile, SPRITE_VORTEX, 1);
+        this.direction_n = 0;
+        this.directions = [
+            [0, 1],
+            [1, 0],
+            [0, -1],
+            [-1, 0]
+        ];
+        this.counter = 0;
+    }
+
+    doStuff() {
+        this.counter = (this.counter + 1) % 3;
+        if (this.counter == 0) {
+            castBolt(this.tile, this.directions[this.direction_n], 2);
+            this.direction_n = (this.direction_n + 1) % 4;
+        }
     }
 }

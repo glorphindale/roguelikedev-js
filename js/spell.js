@@ -1,3 +1,24 @@
+function boltTravel(source_tile, direction, effect, damage) {
+    let new_tile = source_tile;
+    while (true) {
+        let test_tile = new_tile.getNeighbor(direction[0], direction[1]);
+        if (test_tile.monster) {
+            test_tile.monster.hit(damage);
+            test_tile.setEffect(effect);
+            new_tile = test_tile;
+        } else if (test_tile.passable) {
+            test_tile.setEffect(effect);
+            new_tile = test_tile;
+        } else {
+            break;
+        }
+    }
+}
+
+function castBolt(source_tile, direction, damage) {
+    boltTravel(source_tile, direction, SPRITE_BOLT_H + Math.abs(direction[1]), damage);
+}
+
 spells = {
     WOOP: function() {
         player.move(getRandomPassableTile());
@@ -109,7 +130,7 @@ spells = {
         }
     },
     BOLT: function() {
-        boltTravel(player.last_move, SPRITE_BOLT_H + Math.abs(player.last_move[1]), 4);
+        castBolt(player.tile, player.last_move, 4);
     },
     CROSS: function() {
         let directions = [
@@ -119,7 +140,7 @@ spells = {
             [-1, 0]
         ];
         for (let i = 0; i < directions.length; i++) {
-            boltTravel(directions[i], SPRITE_BOLT_H + Math.abs(directions[i][1]), 2);
+            castBolt(player.tile, directions[i], 2);
         }
     },
     MARKTHESPOT: function() {
@@ -130,7 +151,7 @@ spells = {
             [-1, -1]
         ];
         for (let i = 0; i < directions.length; i++) {
-            boltTravel(directions[i], SPRITE_FIREBALL, 3);
+            boltTravel(player.tile, directions[i], SPRITE_FIREBALL, 3);
         }
     },
     TRANQUILITY: function() {
@@ -139,20 +160,3 @@ spells = {
         }
     }
 };
-
-function boltTravel(direction, effect, damage) {
-    let new_tile = player.tile;
-    while (true) {
-        let test_tile = new_tile.getNeighbor(direction[0], direction[1]);
-        if (test_tile.monster) {
-            test_tile.monster.hit(damage);
-            test_tile.setEffect(effect);
-            new_tile = test_tile;
-        } else if (test_tile.passable) {
-            test_tile.setEffect(effect);
-            new_tile = test_tile;
-        } else {
-            break;
-        }
-    }
-}

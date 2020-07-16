@@ -59,11 +59,11 @@ function putMonster(monster_type, tile) {
 }
 
 function spawnMonster(current_level) {
-    let monster_types = [Dodo, Jelly, Snake, Ecto, Mimic, Jester, Lizard];
+    let monster_types = [Dodo, Jelly, Snake, Vortex, Ecto, Mimic, Jester, Lizard];
     // Gradually increase amount of monsters
     current_level += n_loop;
     let cutoff = current_level + 1;
-    if (current_level > 4) {
+    if (current_level > 5) {
         cutoff = monster_types.length;
     }
 
