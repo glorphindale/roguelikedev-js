@@ -183,7 +183,7 @@ function startGame() {
 }
 
 function startLevel(player_hp, player_spells) {
-    spawn_rate = Math.max(0, 25 - n_loop * 7);
+    spawn_rate = Math.max(0, 25 - n_loop * 5);
     spawn_counter = spawn_rate;
 
     generateLevel();
