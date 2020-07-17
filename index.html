@@ -15,8 +15,6 @@
     }
 </style>
 
-<h5>Be the first brave soul to conquer the forest of Brough and defeat all the bros that live here.</h5>
-<h5>Use a/w/s/d to move, 1-9 to cast spells.</h5>
 <canvas></canvas>
 
 
@@ -31,17 +29,18 @@
     // gameplay
     num_tiles = 11;
     max_hp = 6;
-    num_levels = 6;
+    num_levels = 7;
     starting_hp = 3;
+    blindness_radius = 2;
     game_state = "loading";
     shake_amount = 0;
     shake_x = 0;
     shake_y = 0;
     n_loop = 0;
+    wall_density = 0.2;
     // ui
     tile_size = 64;
     ui_width = 4; // Should be 4 when ui is added
-    wall_density = 0.2;
 
     SPRITE_PLAYER = 0;
     SPRITE_PLAYER_DEAD = 1;
@@ -65,6 +64,8 @@
     SPRITE_BOLT_H = 15;
     SPRITE_BOLT_V = 16;
     SPRITE_SHIELD = 17;
+    
+    SPRITE_DARKNESS = 20;
 
     spritesheet = new Image();
     spritesheet.src = 'spritesheet.png';

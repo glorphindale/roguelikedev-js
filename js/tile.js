@@ -61,6 +61,19 @@ class Tile {
         ]);
     }
 
+    getAllNeighbors() {
+        return shuffle([
+            this.getNeighbor(-1, 0),
+            this.getNeighbor(1, 0),
+            this.getNeighbor(0, -1),
+            this.getNeighbor(0, 1),
+            this.getNeighbor(-1, -1),
+            this.getNeighbor(1, -1),
+            this.getNeighbor(-1, 1),
+            this.getNeighbor(1, 1)
+        ]);
+    }
+
     getPassableNeighbors() {
         let neighbors = this.getNeighbors();
         return neighbors.filter(t => t.passable);

@@ -39,14 +39,23 @@ function draw() {
 
         screenshake();
 
+        let player_neighbors = player.tile.getAllNeighbors();
         for (let i = 0; i < num_tiles; i++) {
             for (let j = 0; j < num_tiles; j++) {
                 let tile = getTile(i, j);
-                tile.draw();
+                let dist = tile.dist(player.tile);
+                if (player.blindness_counter > 0 && dist > blindness_radius) {
+                    drawSprite(SPRITE_DARKNESS, i, j);
+                } else {
+                    tile.draw();
+                }
             }
         }
         for (let i = 0; i < monsters.length; i++) {
-            monsters[i].draw();
+            let dist = monsters[i].tile.dist(player.tile); 
+            if (player.blindness_counter == 0 || dist <= blindness_radius) {
+                monsters[i].draw();
+            }
         }
         player.draw();
         // We need to make a second pass because we need to draw effects over the monsters
@@ -91,7 +100,7 @@ function drawScores() {
         rightPad(["RUN", "SCORE", "TOTAL SCORE"]),
         18,
         true,
-        canvas.height/2 - 30,
+        canvas.height/2 - 10,
         "white"
     );
 
@@ -108,7 +117,7 @@ function drawScores() {
             score_text,
             18,
             true,
-            canvas.height/2 - 30 + 24 + i*34,
+            canvas.height/2 - 10 + 24 + i*34,
             i == 0 ? "orange" : "white"
         );
     }
@@ -149,9 +158,12 @@ function showTitle() {
     drawText("SUPER", 40, true, canvas.height/2 - 220, "red");
     drawText("BROUGH BROS.", 70, true, canvas.height/2 - 150, "white");
 
-    drawText("Press a/w/s/d to start", 30, true, canvas.height/2 - 110, "white");
+    drawText("Press a/w/s/d/1-9 to start", 30, true, canvas.height/2 - 110, "white");
 
-    if (n_loop > 0) {
+    if (n_loop == 0) {
+        drawText("Be the first brave soul to conquer the seven forests of Brough", 20, true, canvas.height/2-80, "white");
+        drawText("and defeat all the bros that live here.", 20, true, canvas.height/2 - 60, "white");
+    } else {
         drawText("You've conquered the forest of Brough, and it grows darker.", 20, true, canvas.height/2 - 80, "red");
         drawText("Are you strong enough to come back?", 20, true, canvas.height/2 - 60, "red");
     }

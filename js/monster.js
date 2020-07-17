@@ -9,6 +9,8 @@ class Monster {
 
         this.teleport_counter = 2;
         this.bonus_attack = 0;
+        this.blinds = false;
+        this.blindness_counter = 0;
     }
 
     replace(new_monster_type) {
@@ -85,6 +87,9 @@ class Monster {
                     this.attacked_this_turn = true;
                     new_tile.monster.stunned = true;
                     new_tile.monster.hit(1 + this.bonus_attack);
+                    if (new_tile.monster && this.blinds) {
+                        new_tile.monster.blindness_counter = 6;
+                    }
                     this.bonus_attack = 0;
 
                     shake_amount = 5;
@@ -144,6 +149,7 @@ class Player extends Monster {
         super(tile, SPRITE_PLAYER, starting_hp);
         this.is_player = true;
         this.teleport_counter = 0;
+        this.blindness_counter = 0;
 
         this.spells = shuffle(Object.keys(spells)).splice(0, num_spells);
     }
@@ -185,6 +191,9 @@ class Player extends Monster {
     update() {
         if (this.shield > 0) {
             this.shield--;
+        }
+        if (this.blindness_counter) {
+            this.blindness_counter--;
         }
     }
 }
@@ -243,6 +252,7 @@ class Snake extends Monster {
 class Jester extends Monster {
     constructor(tile) {
         super(tile, SPRITE_JESTER, 2);
+        this.blinds = true;
     }
 
     doStuff() {
@@ -259,6 +269,7 @@ class Jester extends Monster {
 class Jelly extends Monster {
     constructor(tile) {
         super(tile, SPRITE_JELLY, 2);
+        this.blinds = true;
     }
 
     doStuff() {

@@ -98,7 +98,7 @@ spells = {
                 }
             }
         }
-        player.setEffect(SPRITE_AURA);
+        player.tile.setEffect(SPRITE_AURA);
         player.heal(2);
     },
     KINGMAKER: function() {
