@@ -180,6 +180,10 @@ function startGame() {
 
     startLevel(starting_hp, false);
     game_state = "running";
+    if (starting) {
+        playSound("music");
+        starting = false;
+    }
 }
 
 function startLevel(player_hp, player_spells) {
@@ -233,8 +237,14 @@ function initSounds() {
         hit2: new Audio("sounds/monster_hit.wav"),
         treasure: new Audio("sounds/treasure.wav"),
         new_level: new Audio("sounds/new_level.wav"),
-        spell: new Audio("sounds/spell.wav")
+        spell: new Audio("sounds/spell.wav"),
+        music: new Audio("sounds/bensound-deepblue.mp3")
     };
+    for (let sound in sounds) {
+        sounds[sound].volume = 0.2;
+    }
+    sounds["music"].loop = true;
+    sounds["music"].volume = 0.15;
 }
 
 function playSound(sound_name) {

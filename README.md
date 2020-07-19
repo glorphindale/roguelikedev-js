@@ -10,3 +10,7 @@ Can be played [here](https://glorphindale.github.io/roguelikedev-js/)
 
 To run clone the repo and open index.html.
 Control with a/w/s/d and number keys for spells.
+
+## Credits and attributions
+
+Music: [DEEP BLUE by Bensound](www.bensound.com), [from here](https://www.bensound.com/royalty-free-music/track/deep-blue)
