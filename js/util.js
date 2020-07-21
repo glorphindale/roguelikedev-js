@@ -4,13 +4,17 @@ function randomRange(min, max) {
     return min + Math.floor(Math.random()*(max-min+1));
 }
 
-function tryTo(description, callback) {
+function tryTo(description, callback, just_stop) {
     for (let timeout = MAX_TIMEOUT; timeout > 0; timeout--) {
         if (callback()) {
-            return;
+            return true;
         }
     }
-    throw "Timeout when trying to " + description;
+    if (!just_stop) {
+        throw "Timeout when trying to " + description;
+    } else {
+        return false;
+    }
 }
 
 function shuffle(arr) {

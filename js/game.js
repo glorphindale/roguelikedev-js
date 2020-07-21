@@ -201,7 +201,18 @@ function startLevel(player_hp, player_spells) {
         player.spells = player_spells;
     }
         
-    getRandomPassableTile().replace(Exit);
+    let found_exit = tryTo("put exit far away from player", function() {
+        let tile = getRandomPassableTile();
+        if (player.tile.dist(tile) > 4) {
+            tile.replace(Exit);
+            return true;
+        } else {
+            return false;
+        }
+    });
+    if (!found_exit) {
+        getRandomPassableTile().replace(Exit);
+    }
 }
 
 function getScores() {
